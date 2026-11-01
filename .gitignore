@@ -1,0 +1,11 @@
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# secrets — never commit these
+tokens/
+src/main/resources/credentials/*.json
+!src/main/resources/credentials/*.example.json

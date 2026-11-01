@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gmail-sheets-kafka-agents
+  kafka:
+    bootstrap-servers: localhost:9092
+
+agents:
+  kafka:
+    topic:
+      gmail-messages: gmail-messages
+      partitions: 3
+      replication-factor: 1
+    consumer:
+      group-id: sheets-writer-group
+
+  gmail:
+    poll-interval-ms: 30000          # how often Agent 1 polls Gmail
+    target-sender: someone@example.com   # <-- set the sender you want to watch
+    credentials-path: src/main/resources/credentials/client_secret.json
+    tokens-directory-path: tokens
+
+  sheets:
+    spreadsheet-id: YOUR_SPREADSHEET_ID_HERE   # <-- set your target spreadsheet
+    range: Sheet1!A:E
+
+  google:
+    application-name: gmail-sheets-kafka-agents
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+  health:
+    kafka:
+      enabled: true
+
+logging:
+  level:
+    com.example.agents: DEBUG
+    org.springframework.kafka: INFO
+    org.apache.kafka: WARN
